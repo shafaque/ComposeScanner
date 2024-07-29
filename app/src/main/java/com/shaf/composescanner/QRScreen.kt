@@ -23,6 +23,28 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalPermissionsApi::class)
+@Composable
+fun CameraPermission(content: @Composable () -> Unit) {
+    val cameraPermissionState =
+        rememberPermissionState(permission = android.Manifest.permission.CAMERA)
+
+    LaunchedEffect(key1 = cameraPermissionState.status) {
+        if (!cameraPermissionState.status.isGranted) {
+            cameraPermissionState.launchPermissionRequest()
+        }
+    }
+
+    if (cameraPermissionState.status.isGranted) {
+        content()
+    } else {
+        Text(text = "Camera permission is required to scan QR codes.")
+    }
+}
 
 @Composable
 fun CameraPreview(qrCodeData: MutableState<String>) {
@@ -62,7 +84,11 @@ fun CameraPreview(qrCodeData: MutableState<String>) {
                 imageAnalyzer
             )
         } catch (exc: Exception) {
-            Toast.makeText(context, "Camera initialization failed: ${exc.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                "Camera initialization failed: ${exc.message}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }
