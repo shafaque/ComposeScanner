@@ -9,8 +9,6 @@ This project is a QR Code Scanner application built using Jetpack Compose and Go
 - [Architecture](#architecture)
 - [Technologies Used](#technologies-used)
 - [Setup and Installation](#setup-and-installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Features
@@ -53,5 +51,9 @@ The project follows a straightforward architecture using Jetpack Compose and Cam
    ```bash
    git clone https://github.com/shafaque/ComposeScanner.git
    cd ComposeScanner
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 
